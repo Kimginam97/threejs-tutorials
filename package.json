@@ -1,0 +1,23 @@
+{
+  "name": "threejs-tutorials",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kimginam97/threejs-tutorials.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kimginam97/threejs-tutorials/issues"
+  },
+  "homepage": "https://github.com/Kimginam97/threejs-tutorials#readme",
+  "devDependencies": {
+    "@types/three": "^0.154.0",
+    "three": "^0.154.0"
+  }
+}
