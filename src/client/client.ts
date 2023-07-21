@@ -70,7 +70,7 @@ const options = {
 const gui = new GUI()
 
 const materialFolder = gui.addFolder('THREE.Material')
-materialFolder.add(material, 'transparent').onChange(() => material.needsUpdate = true)
+materialFolder.add(material, 'transparent')
 materialFolder.add(material, 'opacity', 0, 1, 0.01)
 materialFolder.add(material, 'depthTest')
 materialFolder.add(material, 'depthWrite')
@@ -148,6 +148,23 @@ function regeneratePlaneGeometry() {
     plane.geometry.dispose()
     plane.geometry = newGeometry
 }
+
+// Since Three r151, we also need to update the properties of the displacementMap to match the changes to the texture map
+// const textureFolder = gui.addFolder('Texture')
+// textureFolder
+//     .add(texture.repeat, 'x', 0.1, 1, 0.1)
+//     .onChange((v) => ((material.displacementMap as THREE.Texture).repeat.x = v))
+// textureFolder
+//     .add(texture.repeat, 'y', 0.1, 1, 0.1)
+//     .onChange((v) => ((material.displacementMap as THREE.Texture).repeat.y = v))
+// textureFolder
+//     .add(texture.center, 'x', 0, 1, 0.001)
+//     .onChange((v) => ((material.displacementMap as THREE.Texture).center.x = v))
+// textureFolder
+//     .add(texture.center, 'y', 0, 1, 0.001)
+//     .onChange((v) => ((material.displacementMap as THREE.Texture).center.y = v))
+
+// textureFolder.open()
 
 function animate() {
     requestAnimationFrame(animate)
