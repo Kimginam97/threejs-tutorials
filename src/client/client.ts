@@ -1,14 +1,11 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import Stats from 'three/examples/jsm/libs/stats.module'
 
 const scene = new THREE.Scene()
 scene.add(new THREE.AxesHelper(5))
-
-// const light = new THREE.SpotLight();
-// light.position.set(5, 5, 5)
-// scene.add(light);
 
 const camera = new THREE.PerspectiveCamera(
     75,
@@ -19,19 +16,8 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 2
 
 const renderer = new THREE.WebGLRenderer()
-// Since Three r150, and Blender 3.6, lighting has changed significantly.
-//
-// renderer.physicallyCorrectLights = true // is now deprecated since Three r150. Use renderer.useLegacyLights = false instead.
-//
-// If exporting lights from Blender, they are very bright.
-// lights exported from blender are 10000 times brighter when used in Threejs
-// so, you can counter this by setting renderer.useLegacyLights = false
-renderer.useLegacyLights = false // WebGLRenderer.physicallyCorrectLights = true is now WebGLRenderer.useLegacyLights = false
-// however, they are now still 100 times brighter in Threejs than in Blender,
-// so to try and match the threejs scene shown in video, reduce Spotlight watts in Blender to 10w.
-// The scene in blender will be lit very dull. 
-// Blender and Threejs use different renderers, they will never match. Just try your best.
-//
+//renderer.physicallyCorrectLights = true //deprecated
+renderer.useLegacyLights = false //use this instead of setting physicallyCorrectLights=true property
 renderer.shadowMap.enabled = true
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
@@ -39,9 +25,14 @@ document.body.appendChild(renderer.domElement)
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 
+// Note that since Three release 148, you will find the Draco libraries in the `.\node_modules\three\examples\jsm\libs\draco\` folder.
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/js/libs/draco/')
+
 const loader = new GLTFLoader()
+loader.setDRACOLoader(dracoLoader)
 loader.load(
-    'models/monkey.glb',
+    'models/monkey_compressed.glb',
     function (gltf) {
         gltf.scene.traverse(function (child) {
             if ((child as THREE.Mesh).isMesh) {
